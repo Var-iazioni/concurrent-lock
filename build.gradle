@@ -1,0 +1,58 @@
+// ********************
+// gradle公共配置
+// ********************
+// 变量定义
+ext {
+  // spring boot版本
+  springBootVersion = '2.2.8.RELEASE'
+}
+// 插件
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+
+// 指定java版本
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// 指定字符编码
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+// 仓库
+repositories {
+  maven {
+    url "http://repo2.maven.org/maven2/"
+  }
+}
+
+// 不使用gradle缓存
+configurations.all{
+  resolutionStrategy.cacheChangingModulesFor 0,'seconds'
+  resolutionStrategy.cacheDynamicVersionsFor 0,'seconds'
+}
+
+// **************
+// 工程信息
+// **************
+group = 'com.variazioni.concurrent'
+description = 'concurrent-lock'
+version = '0.1.0-SNAPSHOT'
+
+// **************
+// 依赖
+// **************
+dependencies {
+
+  compile "org.apache.curator:curator-framework:4.2.0"
+  compile "org.apache.curator:curator-recipes:4.2.0"
+
+  compile "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+
+  //  compile "org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}"
+  compile "redis.clients:jedis:3.1.0"
+
+  compile "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+
+  compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+  runtime 'mysql:mysql-connector-java:8.0.12'
+  testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+}
