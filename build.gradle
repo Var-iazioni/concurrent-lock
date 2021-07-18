@@ -1,10 +1,11 @@
-// ********************
-// gradle公共配置
-// ********************
-// 变量定义
 ext {
-  // spring boot版本
+  // spring boot
   springBootVersion = '2.2.8.RELEASE'
+  // mysql connector
+  mysqlConnectorVersion = '8.0.12'
+  // aspectjweaver
+  aspectweaverVersion = '1.9.7'
+  
 }
 // 插件
 apply plugin: 'java-library'
@@ -20,7 +21,7 @@ tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 // 仓库
 repositories {
   maven {
-    url "http://repo2.maven.org/maven2/"
+    url "https://repo1.maven.org/maven2/"
   }
 }
 
@@ -35,24 +36,16 @@ configurations.all{
 // **************
 group = 'com.variazioni.concurrent'
 description = 'concurrent-lock'
-version = '0.1.0-SNAPSHOT'
+version = '1.0.0'
 
 // **************
 // 依赖
 // **************
 dependencies {
-
-  compile "org.apache.curator:curator-framework:4.2.0"
-  compile "org.apache.curator:curator-recipes:4.2.0"
-
   compile "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
-
-  //  compile "org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}"
-  compile "redis.clients:jedis:3.1.0"
-
   compile "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
-
   compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-  runtime 'mysql:mysql-connector-java:8.0.12'
+  runtimeOnly "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+  //runtimeOnly 'org.aspectj:aspectjweaver:${aspectweaverVersion}'
   testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }

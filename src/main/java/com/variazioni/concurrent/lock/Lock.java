@@ -1,62 +1,75 @@
 package com.variazioni.concurrent.lock;
 
 /**
- * 分布式锁接口
- *
- * @author 王振宇
- * @date 2020/07/13
+ * Resource lock interface
+ * 
+ * @author Variazioni
+ * @date 2021/07/18
  */
 public interface Lock {
 
   /**
-   * 查询锁数量
-   *
-   * @author 王振宇
-   * @param lockName 资源名称
-   * @return int 当前已加锁的数量，若资源未加锁则返回0
+   * locks statistics
+   * 
+   * @author Variazioni
+   * @param lockName
+   * @return int
    */
   public int locksCount(String lockName);
 
   /**
-   * 加锁
-   *
-   * @author 王振宇
-   * @param lockName 资源名称
-   * @param lockKey 持锁人key
-   * @param limit 共享锁限制数量
-   * @param timeout 锁超时时间,单位:秒
+   * Shared lock
+   * 
+   * @author Variazioni
+   * @param lockName
+   * @param lockKey
+   * @param limit
+   * @param timeout
+   * @param wait
    * @return boolean
    */
-  public boolean lock(String lockName, String lockKey, int limit, int timeout);
+  public boolean lock(String lockName, String lockKey, int limit, int timeout, Boolean wait);
+
 
   /**
-   * 解锁
-   *
-   * @author 王振宇
-   * @param lockName 资源名称
-   * @param lockKey 持锁人key
+   * Exclusive lock
+   * 
+   * @author Variazioni
+   * @param lockName
+   * @param lockKey
+   * @param lockinTime
+   * @param wait
+   * @return boolean
+   */
+  public boolean lock(String lockName, String lockKey, int lockinTime, Boolean wait);
+
+  /**
+   * Unlock
+   * 
+   * @author Variazioni
+   * @param lockName
+   * @param lockKey
    * @return boolean
    */
   public boolean unlock(String lockName, String lockKey);
 
   /**
-   * 等待锁释放
-   *
-   * @author 王振宇
-   * @param lockName 资源名称
-   * @return void
+   * Waiting to unlock
+   * 
+   * @author Variazioni
+   * @param lockName
+   * @return boolean
    */
   public boolean waitLock(String lockName);
 
   /**
-   * 超时时间延长
-   *
-   * @author 王振宇
-   * @param lockName 资源名称
-   * @param lockKey 持锁人key
-   * @param timeout 超时时间
+   * Lock timeout extended
+   * 
+   * @author Variazioni
+   * @param lockName
+   * @param lockKey
+   * @param timeout
    * @return boolean
-   * @throws
    */
   public boolean extendLock(String lockName, String lockKey, int timeout);
 }
